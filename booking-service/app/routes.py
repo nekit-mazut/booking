@@ -53,22 +53,37 @@ def create_room():
 @bp.route('/bookings', methods=['POST'])
 def create_booking():
     data = request.get_json()
-    new_booking = Booking(room_id=data['room_id'], user_id=data['user_id'], check_in=data['check_in'],
-                          check_out=data['check_out'], total_price=data['total_price'])
+    new_booking = Booking(
+        room_id=data['room_id'],
+        user_id=data['user_id'],
+        check_in=data['check_in'],
+        check_out=data['check_out'],
+        total_price=data['total_price']
+    )
     db.session.add(new_booking)
     db.session.commit()
-    return jsonify({'id': new_booking.id, 'room_id': new_booking.room_id, 'user_id': new_booking.user_id,
-                    'check_in': new_booking.check_in, 'check_out': new_booking.check_out,
-                    'total_price': new_booking.total_price}), 201
+    return jsonify({
+        'id': new_booking.id,
+        'room_id': new_booking.room_id,
+        'user_id': new_booking.user_id,
+        'check_in': new_booking.check_in,
+        'check_out': new_booking.check_out,
+        'total_price': new_booking.total_price
+    }), 201
 
 
 @bp.route('/bookings/user/<int:user_id>', methods=['GET'])
 def get_user_bookings(user_id):
     user_bookings = Booking.query.filter_by(user_id=user_id).all()
     if not user_bookings:
-        return jsonify({'message': 'No bookings found for user with id {}'.format(user_id)}), 404
-    bookings_data = [{'id': booking.id, 'room_id': booking.room_id, 'check_in': booking.check_in,
-                      'check_out': booking.check_out, 'total_price': booking.total_price} for booking in user_bookings]
+        return jsonify({'message': f'No bookings found for user with id {user_id}'}), 404
+    bookings_data = [{
+        'id': booking.id,
+        'room_id': booking.room_id,
+        'check_in': booking.check_in,
+        'check_out': booking.check_out,
+        'total_price': booking.total_price
+    } for booking in user_bookings]
     return jsonify({'bookings': bookings_data}), 200
 
 
