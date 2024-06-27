@@ -1,75 +1,121 @@
 from flask import Blueprint, request, jsonify
 from . import db
 from .models import Room, Booking
-from sqlalchemy import or_
+from sqlalchemy import and_
 
 bp = Blueprint('bookings', __name__)
 
 
-@bp.route('/rooms', methods=['GET'])
-def get_available_rooms():
-    check_in = request.args.get('check_in')
-    check_out = request.args.get('check_out')
-    capacity = request.args.get('capacity')
+@bp.route('/room_types', methods=['GET'])
+def get_room_types():
+    room_types = Room.query.with_entities(Room.room_type).distinct().all()
+    room_types_list = [row[0] for row in room_types]
+    return jsonify({'room_types': room_types_list}), 200
+
+
+@bp.route('/rooms/search', methods=['POST'])
+def search_available_rooms():
+    data = request.get_json()
+    check_in = data.get('check_in')
+    check_out = data.get('check_out')
+    capacity = data.get('capacity')
+    room_types = data.get('room_types', [])
+    price_min = data.get('price_min')
+    price_max = data.get('price_max')
 
     if not check_in or not check_out or not capacity:
         return jsonify({'error': 'Check-in, check-out date, and capacity are required parameters.'}), 400
 
-    available_rooms = Room.query.filter(Room.capacity >= capacity) \
-        .filter(or_(Room.is_booked == False, Room.is_booked == None)) \
-        .filter(or_(Room.booking_start_date == None, Room.booking_start_date <= check_out)) \
-        .filter(or_(Room.booking_end_date == None, Room.booking_end_date >= check_in)) \
-        .all()
+    query = Room.query.filter(Room.capacity >= capacity)
 
-    rooms_data = []
-    for room in available_rooms:
-        rooms_data.append({
-            'id': room.id,
-            'name': room.name,
-            'room_type': room.room_type,
-            'price': room.price,
-            'capacity': room.capacity,
-            'is_booked': room.is_booked,
-            'booking_start_date': room.booking_start_date,
-            'booking_end_date': room.booking_end_date
-        })
+    if room_types:
+        query = query.filter(Room.room_type.in_(room_types))
 
-    return jsonify({'rooms': rooms_data}), 200
+    if price_min is not None:
+        query = query.filter(Room.price >= price_min)
+
+    if price_max is not None:
+        query = query.filter(Room.price <= price_max)
+
+    rooms = query.all()
+    available_rooms = []
+    for room in rooms:
+        overlapping_bookings = Booking.query.filter(
+            Booking.room_id == room.id,
+            and_(
+                Booking.check_in < check_out,
+                Booking.check_out > check_in
+            )
+        ).all()
+
+        if not overlapping_bookings:
+            available_rooms.append({
+                'id': room.id,
+                'name': room.name,
+                'room_type': room.room_type,
+                'price': room.price,
+                'capacity': room.capacity
+            })
+
+    response_data = {'rooms': available_rooms}
+
+    return jsonify(response_data), 200
 
 
 @bp.route('/rooms', methods=['POST'])
 def create_room():
     data = request.get_json()
-    new_room = Room(name=data['name'], room_type=data['room_type'], price=data['price'], capacity=data['capacity'],
-                    is_booked=False, booking_start_date=None, booking_end_date=None)
+    if not data or not all(key in data for key in ('name', 'roomType', 'price', 'capacity')):
+        return jsonify({'message': 'Missing required fields'}), 400
+
+    new_room = Room(
+        name=data['name'],
+        room_type=data['roomType'],
+        price=data['price'],
+        capacity=data['capacity']
+    )
+
     db.session.add(new_room)
     db.session.commit()
-    return jsonify(
-        {'id': new_room.id, 'name': new_room.name, 'room_type': new_room.room_type, 'price': new_room.price,
-         'capacity': new_room.capacity, 'is_booked': new_room.is_booked,
-         'booking_start_date': new_room.booking_start_date, 'booking_end_date': new_room.booking_end_date}), 201
+
+    return jsonify({
+        'id': new_room.id,
+        'name': new_room.name,
+        'room_type': new_room.room_type,
+        'price': new_room.price,
+        'capacity': new_room.capacity,
+    }), 201
 
 
 @bp.route('/bookings', methods=['POST'])
 def create_booking():
-    data = request.get_json()
-    new_booking = Booking(
-        room_id=data['room_id'],
-        user_id=data['user_id'],
-        check_in=data['check_in'],
-        check_out=data['check_out'],
-        total_price=data['total_price']
-    )
-    db.session.add(new_booking)
-    db.session.commit()
-    return jsonify({
-        'id': new_booking.id,
-        'room_id': new_booking.room_id,
-        'user_id': new_booking.user_id,
-        'check_in': new_booking.check_in,
-        'check_out': new_booking.check_out,
-        'total_price': new_booking.total_price
-    }), 201
+    try:
+        data = request.get_json()
+
+        check_in = data['check_in']
+        check_out = data['check_out']
+        room_id = data['room_id']
+        user_id = data['user_id']
+        total_price = data['total_price']
+
+        new_booking = Booking(
+            room_id=room_id,
+            user_id=user_id,
+            check_in=check_in,
+            check_out=check_out,
+            total_price=total_price
+        )
+
+        db.session.add(new_booking)
+        db.session.commit()
+
+        return jsonify({'message': 'Booking created successfully'}), 201
+
+    except KeyError as e:
+        return jsonify({'error': f'Missing key: {str(e)}'}), 400
+
+    except Exception as e:
+        return jsonify({'error': 'An error occurred while creating the booking.'}), 500
 
 
 @bp.route('/bookings/user/<int:user_id>', methods=['GET'])

@@ -7,9 +7,6 @@ class Room(db.Model):
     room_type = db.Column(db.String(50), nullable=False)
     price = db.Column(db.Float, nullable=False)
     capacity = db.Column(db.Integer, nullable=False)
-    is_booked = db.Column(db.Boolean, default=False)
-    booking_start_date = db.Column(db.DateTime)
-    booking_end_date = db.Column(db.DateTime)
 
 
 class Booking(db.Model):

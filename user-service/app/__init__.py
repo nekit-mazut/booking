@@ -1,6 +1,7 @@
 from flask import Flask
 from flask_migrate import Migrate
 from flask_jwt_extended import JWTManager
+from flask_cors import CORS
 from .models import db
 
 def create_app():
@@ -11,6 +12,9 @@ def create_app():
         db.init_app(app)
         migrate = Migrate(app, db)
         jwt = JWTManager(app)
+
+
+        CORS(app)
 
         from .routes import bp as user_bp
         app.register_blueprint(user_bp)

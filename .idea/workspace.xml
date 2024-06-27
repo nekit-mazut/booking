@@ -4,18 +4,41 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="49b69b4b-c40a-4876-8387-f2b92cc6f19f" name="Changes" comment="1">
+    <list default="true" id="49b69b4b-c40a-4876-8387-f2b92cc6f19f" name="Changes" comment="2">
       <change afterPath="$PROJECT_DIR$/booking-service/app/config.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/booking-service/app/models.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/booking-service/app/routes.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/booking-service/requirments.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/booking-service/run.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/booking-service/testing.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/static/style.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/templates/index.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/email-service/run.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/nginx.conf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/public/templates/index.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/App.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/api.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/assets/css/style.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/assets/javascript/scripts.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/auth.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/router.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/views/AdminPanel.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/views/CreateAdmin.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/views/HomeView.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/views/LoginForm.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/views/ProfileView.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/views/RegisterForm.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/views/RoomSearch.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/views/SearchResults.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/start.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user-service/app/config.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/инструкция" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/booking-service/app/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/booking-service/app/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/booking-service/app/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/booking-service/app/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/booking-service/app/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/booking-service/app/routes.py" beforeDir="false" afterPath="$PROJECT_DIR$/booking-service/app/routes.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/booking-service/requirments.txt" beforeDir="false" afterPath="$PROJECT_DIR$/email-service/app/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/booking-service/run.py" beforeDir="false" afterPath="$PROJECT_DIR$/booking-service/run.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/booking-service/testing.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/static/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/email-service/app/config.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/email-service/app/routes.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user-service/app/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/user-service/app/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user-service/app/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/user-service/app/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user-service/app/routes.py" beforeDir="false" afterPath="$PROJECT_DIR$/user-service/app/routes.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user-service/run.py" beforeDir="false" afterPath="$PROJECT_DIR$/user-service/run.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -63,7 +86,9 @@
     "Python.manage.executor": "Run",
     "Python.routes.executor": "Run",
     "Python.run.executor": "Run",
+    "Python.start.executor": "Run",
     "Python.test_request.executor": "Run",
+    "Python.xex.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "git-widget-placeholder": "master"
   },
@@ -75,10 +100,11 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\cdos1\PycharmProjects\booking\booking-service\migrations" />
-      <recent name="C:\Users\cdos1\PycharmProjects\booking\booking-service\app" />
-      <recent name="C:\Users\cdos1\PycharmProjects\booking\frontend" />
-      <recent name="C:\Users\cdos1\PycharmProjects\booking\booking-service" />
+      <recent name="C:\Users\cdos1\PycharmProjects\booking" />
+      <recent name="C:\Users\cdos1\PycharmProjects\booking\user-service" />
+      <recent name="C:\Users\cdos1\PycharmProjects\booking\user-service\app" />
+      <recent name="C:\Users\cdos1\PycharmProjects\booking\frontend\frontend\src" />
+      <recent name="C:\Users\cdos1\PycharmProjects\booking\frontend\frontend\src\assets\javascript" />
     </key>
   </component>
   <component name="RunManager">
@@ -129,11 +155,28 @@
       <option name="project" value="LOCAL" />
       <updated>1717938029758</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="1">
+      <option name="closed" value="true" />
+      <created>1718122438131</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1718122438131</updated>
+    </task>
+    <task id="LOCAL-00003" summary="2">
+      <option name="closed" value="true" />
+      <created>1718314117752</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1718314117752</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="1" />
-    <option name="LAST_COMMIT_MESSAGE" value="1" />
+    <MESSAGE value="2" />
+    <option name="LAST_COMMIT_MESSAGE" value="2" />
   </component>
 </project>
